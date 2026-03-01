@@ -1,0 +1,91 @@
+ScreenManager:
+    WelcomeScreen:
+    QuizScreen:
+    ResultScreen:
+
+<WelcomeScreen>:
+    name: "welcome"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 40
+        spacing: 20
+        canvas.before:
+            Color:
+                rgba: 0.1, 0.2, 0.4, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "🔥 Ultimate Programming Quiz 🔥"
+            font_size: 32
+            bold: True
+
+        Button:
+            text: "Start Quiz"
+            size_hint: 0.5, 0.2
+            pos_hint: {"center_x": 0.5}
+            background_color: 0.2, 0.7, 1, 1
+            on_press:
+                app.root.current = "quiz"
+                app.root.get_screen("quiz").start_quiz()
+
+
+<QuizScreen>:
+    name: "quiz"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 30
+        spacing: 15
+
+        Label:
+            text: root.question_text
+            font_size: 22
+            halign: "center"
+            text_size: self.width, None
+
+        Button:
+            text: root.options[0] if len(root.options) > 0 else ""
+            on_press: root.check_answer(self.text)
+
+        Button:
+            text: root.options[1] if len(root.options) > 1 else ""
+            on_press: root.check_answer(self.text)
+
+        Button:
+            text: root.options[2] if len(root.options) > 2 else ""
+            on_press: root.check_answer(self.text)
+
+        Button:
+            text: root.options[3] if len(root.options) > 3 else ""
+            on_press: root.check_answer(self.text)
+
+
+<ResultScreen>:
+    name: "result"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 40
+        spacing: 20
+        canvas.before:
+            Color:
+                rgba: 0.05, 0.4, 0.2, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "🎉 Thanks for Playing!"
+            font_size: 30
+            bold: True
+
+        Label:
+            text: "Your Score: " + str(root.final_score)
+            font_size: 24
+
+        Button:
+            text: "Play Again"
+            size_hint: 0.5, 0.2
+            pos_hint: {"center_x": 0.5}
+            on_press:
+                app.root.current = "welcome"
