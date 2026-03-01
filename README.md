@@ -19,7 +19,6 @@ A fully functional, object-oriented desktop trivia application built with Python
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/PabloHackWell/OurFirstPythonProject](https://github.com/PabloHackWell/OurFirstPythonProject)
-
+   git clone (https://github.com/PabloHackWell/OurFirstPythonProject)
 
 
