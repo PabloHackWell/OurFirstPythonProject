@@ -36,7 +36,7 @@ class QuizBrain:
 # --- 3. The Database Loader ---
 def load_questions_from_mysql(chosen_difficulty):
     db_connection = mysql.connector.connect(
-      host="localhost", user="root", password="Pablo$100", database="quiz_game"
+      host="localhost", user="root", password="yourpasswd", database="quiz_game"
     )
     cursor = db_connection.cursor()
     
