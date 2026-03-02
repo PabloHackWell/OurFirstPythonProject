@@ -44,4 +44,15 @@
     <li><strong><code>QuizInterface</code>:</strong> An event-driven Tkinter class that handles all user interactions, timers, and canvas updates.</li>
 </ul>
 
+<hr>
+
+<h2>👨‍💻 Developed By</h2>
+<p><strong>Team Schattenweisheit</strong></p>
+<ul>
+    <li><strong>HINA</strong> (LEADER)</li>
+    <li>Anuj Kumar</li>
+    <li>Jatin</li>
+    <li>Jiya</li>
+    <li>Mitali</li>
+</ul>
 
