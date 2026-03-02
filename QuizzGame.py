@@ -15,7 +15,6 @@ class QuizBrain:
         self.question_list = question_list
         self.current_question = None
     
-    # Notice I deleted the timer_label code that was hiding in here!
 
     def still_has_questions(self):
         return self.question_number < len(self.question_list)
@@ -40,14 +39,12 @@ def load_questions_from_mysql(chosen_difficulty):
     )
     cursor = db_connection.cursor()
     
-    # Grab 10 random questions that match the chosen difficulty
     query = "SELECT * FROM questions WHERE difficulty = %s ORDER BY RAND() LIMIT 10"
     cursor.execute(query, (chosen_difficulty,))
     rows = cursor.fetchall()
     
     question_bank = []
     for row in rows:
-        # Assuming the new 'difficulty' column is at the end (row[7])
         text, choices, answer = row[1], [row[2], row[3], row[4], row[5]], row[6]
         question_bank.append(Question(text, choices, answer))
         
@@ -62,13 +59,13 @@ class QuizInterface:
         
         self.window = tk.Tk()
         self.window.title("Advanced AI/ML Quiz")
-        self.window.geometry("500x650") # Made the window slightly taller
+        self.window.geometry("500x650") 
         self.window.config(padx=20, pady=20, bg="#2b2b2b") 
         
         self.score_label = tk.Label(text="Score: 0", fg="white", bg="#2b2b2b", font=("Arial", 12, "bold"))
         self.score_label.pack(pady=10)
         
-        # --- FIXED: Only ONE timer label created here ---
+       
         self.timer_label = tk.Label(text="Time Left: 15", fg="#FFEB3B", bg="#2b2b2b", font=("Arial", 14, "bold"))
         self.timer_label.pack()
         
@@ -113,7 +110,6 @@ class QuizInterface:
 
     # --- GAME FLOW LOGIC ---
     def get_next_question(self):
-        # --- FIXED: Added fg="black" so the text is visible again! ---
         for btn in self.buttons:
             btn.config(bg="SystemButtonFace", fg="black", state="normal")
 
@@ -126,9 +122,8 @@ class QuizInterface:
             for i in range(4):
                 self.buttons[i].config(text=q_data.choices[i])
                 
-            # --- FIXED: Start the timer when the new question loads ---
             if self.timer_id:
-                self.window.after_cancel(self.timer_id) # Stops old timer
+                self.window.after_cancel(self.timer_id) 
             self.start_timer()
             
         else:
@@ -136,11 +131,10 @@ class QuizInterface:
             for btn in self.buttons:
                 btn.config(state="disabled")
             if self.timer_id:
-                self.window.after_cancel(self.timer_id) # Stop timer on game over
+                self.window.after_cancel(self.timer_id)
             messagebox.showinfo("Finished", f"Your final score is {self.quiz.score}/{self.quiz.question_number}")
 
     def button_clicked(self, button_index):
-        # --- FIXED: Stop the timer the moment they click an answer ---
         if self.timer_id:
             self.window.after_cancel(self.timer_id)
 
@@ -165,15 +159,8 @@ class QuizInterface:
 
 print("Loading questions from database...")
 
-# 1. Load the questions from MySQL
 my_questions = load_questions_from_mysql("Medium")
-
-# 2. Give the questions to the logic manager
 quiz = QuizBrain(my_questions)
-
-# 3. Pass the manager into the Interface to launch the game window
 quiz_ui = QuizInterface(quiz)
-
-# 4. Final Score (This prints to the console after you close the window)
 print("--- GAME OVER ---")
 print(f"Your final score is: {quiz.score} out of {quiz.question_number}")
