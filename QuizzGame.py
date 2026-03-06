@@ -1,4 +1,13 @@
 import mysql.connector
+import tkinter as tk
+from tkinter import messagebox
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+test_user = os.getenv("DB_USER")
+print(f"Security Check: Python is securely reading as user -> {test_user}")
 
 # --- 1. The Question Blueprint ---
 class Question:
@@ -34,8 +43,18 @@ class QuizBrain:
 
 # --- 3. The Database Loader ---
 def load_questions_from_mysql(chosen_difficulty):
+
+    db_host = os.getenv("DB_HOST")
+    db_user = os.getenv("DB_USER")
+    db_password = os.getenv("DB_PASSWORD")
+    db_name = os.getenv("DB_NAME")
+
+
     db_connection = mysql.connector.connect(
-      host="localhost", user="root", password="yourpasswd", database="quiz_game"
+      host=db_host, 
+      user=db_user, 
+      password=db_password, 
+      database=db_name
     )
     cursor = db_connection.cursor()
     
@@ -50,8 +69,6 @@ def load_questions_from_mysql(chosen_difficulty):
         
     return question_bank
         
-import tkinter as tk
-from tkinter import messagebox
 
 class QuizInterface:
     def __init__(self, quiz_brain):
